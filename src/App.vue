@@ -5,16 +5,13 @@
 </template>
 
 <script>
+
 export default {
   name: 'app'
 }
 </script>
 
-<style>
+<style lang="scss">
 @import './assets/scss/common/reset.scss';
 @import './assets/scss/common/common.scss';
-
-#app {
-  height: 100%;
-}
 </style>

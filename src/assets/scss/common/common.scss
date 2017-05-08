@@ -5,5 +5,46 @@ body {
   color: #313131;
   overflow-x: hidden;
   line-height: 1;
-  background: url('../../images/loading.gif') no-repeat center 250px;
+  background: url('./assets/images/loading.gif') no-repeat center 250px;
+}
+
+#app {
+  height: 100%;
+}
+
+/* 弱提示弹框布局 */
+
+.weak-alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 9px 20px;
+  text-align: center;
+  font-size: 15px;
+  color: #fff;
+  background-color: rgba(75, 75, 75, 0.85);
+  z-index: 999;
+
+  &.alert-show {
+    animation: show 2s;
+  }
+
+  @keyframes show {
+    0% {
+      transform: translateY(-100%);
+    }
+    20% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    80% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
 }
