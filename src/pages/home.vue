@@ -1,7 +1,6 @@
 <template>
   <div>
-    <img src="../assets/logo.png">
-    <h1>Home</h1>
+    <img class="index" src="../assets/index.png">
   </div>
 </template>
 
@@ -16,3 +15,11 @@
   }
 
 </script>
+
+<style lang="scss">
+  .index {
+    width: 100%;
+    background-color: #fff;
+    margin-top: 40%;
+  }
+</style>
