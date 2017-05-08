@@ -5,6 +5,7 @@ Vue.use(Router)
 
 const home = r => require.ensure([], () => r(require('../pages/home')), 'home')
 const list = r => require.ensure([], () => r(require('../pages/list')), 'list')
+const login = r => require.ensure([], () => r(require('../pages/login')), 'login')
 
 export default new Router({
   mode: 'history',
@@ -18,6 +19,11 @@ export default new Router({
       path: '/list',
       name: 'list',
       component: list
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login
     }
   ]
 })
