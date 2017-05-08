@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const home = r => require.ensure([], () => r(require('../pages/home')), 'home')
+const list = r => require.ensure([], () => r(require('../pages/list')), 'list')
 
 export default new Router({
   mode: 'history',
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: home
+    },
+    {
+      path: '/list',
+      name: 'list',
+      component: list
     }
   ]
 })
