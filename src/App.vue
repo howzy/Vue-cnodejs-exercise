@@ -14,4 +14,5 @@ export default {
 <style lang="scss">
 @import './assets/scss/common/reset.scss';
 @import './assets/scss/common/common.scss';
+@import './assets/scss/iconfont/iconfont.css';
 </style>
