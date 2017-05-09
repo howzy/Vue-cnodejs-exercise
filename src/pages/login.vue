@@ -1,5 +1,6 @@
 <template>
   <div class="login-page">
+    <nv-head></nv-head>
     <section class="page-body">
       <div class="label">
         <input type="text" class="txt" placeholder="Access Token" v-model="token" maxlength="36">
@@ -13,6 +14,7 @@
 
 <script>
 import $ from 'webpack-zepto'
+import nvHead from '../components/header'
   
 export default {
   data() {
@@ -51,6 +53,9 @@ export default {
         }
       })
     }
+  },
+  components: {
+    nvHead
   }
 }
 </script>
