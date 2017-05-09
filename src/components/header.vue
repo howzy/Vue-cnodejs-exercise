@@ -10,10 +10,18 @@
         </router-link>
       </div>
     </header>
+    <nv-menu></nv-menu>
   </div>
 </template>
 
 <script>
+import nvMenu from './menu'
+
+export default {
+  components: {
+    nvMenu
+  }
+}
   
 </script>
 
