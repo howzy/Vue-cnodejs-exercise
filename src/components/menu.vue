@@ -1,5 +1,5 @@
 <template>
-  <section id="sideBar" class="nav-list show">
+  <section id="sideBar" class="nav-list" :class="{'show': showMenu}">
     <section class="list-ul">
       <router-link class="icon-quanbu iconfont item" :to="{'name':'list', query:{tab:'all'}}">全部</router-link>
       <router-link class="icon-hao iconfont item" :to="{'name':'list', query:{tab:'good'}}">精华</router-link>

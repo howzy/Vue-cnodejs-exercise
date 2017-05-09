@@ -1,23 +1,42 @@
 <template>
   <div>
-    <div class="page-cover"></div>
+    <div class="page-cover" v-if="show" @click="closeMenu"></div>
     <header class="fix-header" id="hd">
       <div class="nv-toolbar">
-        <div class="toolbar-nav"></div>
+        <div class="toolbar-nav" @click="openMenu"></div>
         <span>登录</span>
         <router-link to="/add">
           <i class="iconfont add-icon">&#xe60f;</i>
         </router-link>
       </div>
     </header>
-    <nv-menu></nv-menu>
+    <nv-menu :show-menu="show"></nv-menu>
   </div>
 </template>
 
 <script>
+import $ from 'webpack-zepto'
 import nvMenu from './menu'
 
 export default {
+  replace: true,
+  data() {
+    return {
+      nickname: '',
+      profileimagurl: '',
+      show: false
+    }
+  },
+  methods: {
+    openMenu() {
+      $('html, body, #page').addClass('scroll-hide');
+      this.show = !this.show;
+    },
+    closeMenu() {
+      this.show = !this.show;
+      $('html, body, #page').removeClass('scroll-hide');
+    }
+  },
   components: {
     nvMenu
   }
@@ -26,6 +45,15 @@ export default {
 </script>
 
 <style lang="scss">
+  .page-cover {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .4);
+    z-index: 7;
+  }
   #hd {
     border-bottom: 1px solid #e8e8e8;
 
