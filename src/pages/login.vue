@@ -2,17 +2,54 @@
   <div class="login-page">
     <section class="page-body">
       <div class="label">
-        <input type="text" class="txt" placeholder="Access Token" maxlength="36">
+        <input type="text" class="txt" placeholder="Access Token" v-model="token" maxlength="36">
       </div>
       <div class="label">
-        <span class="button">登录</span>
+        <span class="button" @click="login">登录</span>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import $ from 'webpack-zepto'
   
+export default {
+  data() {
+    return {
+      token: ''
+    }
+  },
+  methods: {
+    login() {
+      if (this.token === '') {
+        this.$alert('令牌各式错误,应为36位UUID字符串');
+        return false;
+      }
+      $.ajax({
+        type: 'POST',
+        url: 'https://cnodejs.org/api/v1/accesstoken',
+        data: {
+          accesstoken: this.token
+        },
+        dataType: 'json',
+        success: res => {
+          let user = {
+            loginname: res.loginname,
+            avatar_url: res.avatar_url,
+            userId: res.id,
+            token: this.token
+          };
+          sessionStorage.user = JSON.stringify(user);
+        },
+        error: res => {
+          var err = JSON.parse(res.responseText);
+          this.$alert(err.error_msg);
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style lang="scss">
