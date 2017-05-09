@@ -41,6 +41,9 @@ export default {
             token: this.token
           };
           sessionStorage.user = JSON.stringify(user);
+          this.$store.dispatch('setUserInfo', user);
+          let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+          this.$router.push({ path: redirect });
         },
         error: res => {
           var err = JSON.parse(res.responseText);
