@@ -1,11 +1,13 @@
 <template>
   <div>
+    <nv-head></nv-head>
     <h1>List</h1>
   </div>
 </template>
 
 <script>
 import $ from 'webpack-zepto'
+import nvHead from '../components/header'
 
 export default {
   data() {
@@ -73,6 +75,20 @@ export default {
     },
     mergeTopics(topic) {
       this.topics.push(topic);
+    },
+    getTitleStr(tab) {
+      switch(tab) {
+        case 'share':
+          return '分享';
+        case 'ask':
+          return '问答';
+        case 'job':
+          return '招聘';
+        case 'good':
+          return '精华';
+        default:
+          return '全部';
+      }
     }
   },
   watch: {
@@ -85,6 +101,9 @@ export default {
       this.searchKey.page = 1;
       this.getTopics();
     }
+  },
+  components: {
+    nvHead
   }
 }
 </script>
