@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nv-head></nv-head>
+    <nv-head ref="head" :page-type="getTitleStr(searchKey.tab)" :fix-head="true"></nv-head>
     <h1>List</h1>
   </div>
 </template>
@@ -100,6 +100,7 @@ export default {
       }
       this.searchKey.page = 1;
       this.getTopics();
+      this.$refs.head.show = false;
     }
   },
   components: {
