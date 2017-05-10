@@ -1,12 +1,23 @@
 <template>
   <div>
     <nv-head ref="head" :page-type="getTitleStr(searchKey.tab)" :fix-head="true"></nv-head>
-    <h1>List</h1>
+    <section id="page">
+      <!--首页列表-->
+      <ul class="posts-list">
+        <li v-for="item in topics" :key="item.id">
+          <router-link to="">
+            <h3 :class="getTabInfo(item.tab, item.good, item.top, true)"
+                :title="getTabInfo(item.tab, item.good, item.top, false)">{{item.title}}</h3>
+          </router-link>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
 import $ from 'webpack-zepto'
+import utils from '../libs/utils'
 import nvHead from '../components/header'
 
 export default {
@@ -89,6 +100,9 @@ export default {
         default:
           return '全部';
       }
+    },
+    getTabInfo(tab, good, top, isClass) {
+      return utils.getTabInfo(tab, good, top, isClass);
     }
   },
   watch: {
