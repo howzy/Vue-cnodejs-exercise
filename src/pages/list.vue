@@ -96,6 +96,7 @@ export default {
     '$route' (to, from) {
       // 如果是当前页面切换分类的情况
       if (to.query && to.query.tab) {
+        this.searchKey.tab = to.query.tab;
         this.topics = [];
       }
       this.searchKey.page = 1;
