@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <nv-head></nv-head>
+    <nv-head pageType="登录"></nv-head>
     <section class="page-body">
       <div class="label">
         <input type="text" class="txt" placeholder="Access Token" v-model="token" maxlength="36">
@@ -80,7 +80,7 @@ export default {
       }
       .button {
         display: inline-block;
-        width: 100%;
+        width: 99%;
         height: 42px;
         line-height: 42px;
         border-radius: 3px;

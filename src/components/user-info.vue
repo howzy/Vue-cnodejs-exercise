@@ -18,7 +18,6 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  replate: true,
   computed: {
     ...mapGetters({
       userInfo: 'getUserInfo'

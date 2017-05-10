@@ -1,16 +1,17 @@
 <template>
   <div>
     <div class="page-cover" v-if="show" @click="closeMenu"></div>
-    <header class="fix-header" id="hd">
+    <header :class="{'fix-header':fixHead,'show':show&&fixHead,'no-fix':!fixHead}" id="hd">
       <div class="nv-toolbar">
-        <div class="toolbar-nav" @click="openMenu"></div>
-        <span>登录</span>
+        <div class="toolbar-nav" @click="openMenu" v-if="fixHead"></div>
+        <span>{{pageType}}</span>
+        <i class="num" v-if="messageCount > 0">{{messageCount}}</i>
         <router-link to="/add">
-          <i class="iconfont add-icon">&#xe60f;</i>
+          <i class="iconfont add-icon" v-if="needAdd" v-show="!messageCount || messageCount < 0">&#xe60f;</i>
         </router-link>
       </div>
     </header>
-    <nv-menu :show-menu="show"></nv-menu>
+    <nv-menu :show-menu="show" v-if="fixHead"></nv-menu>
   </div>
 </template>
 
@@ -19,7 +20,15 @@ import $ from 'webpack-zepto'
 import nvMenu from './menu'
 
 export default {
-  replace: true,
+  props: {
+    pageType: String,
+    fixHead: Boolean,
+    messageCount: Number,
+    needAdd: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       nickname: '',
