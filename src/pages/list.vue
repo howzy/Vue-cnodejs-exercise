@@ -72,7 +72,7 @@
     beforeRouteLeave(to, from, next) {
       // 如果跳转到详情页面，则记录关键数据
       // 方便从详情页面返回到该页面的时候继续加载之前位置的数据
-      if (to.name = 'topic') {
+      if (to.name === 'topic') {
         // 当前滚动条的位置
         sessionStorage.scrollTop = $(window).scrollTop();
         // 当前页面的主题数据
