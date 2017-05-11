@@ -136,7 +136,6 @@
         this.searchKey.page = 1;
         this.getTopics();
         this.$refs.head.show = false;
-        $('html, body, #page').removeClass('scroll-hide');
       }
     },
     components: {
