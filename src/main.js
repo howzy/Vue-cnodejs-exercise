@@ -26,8 +26,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-
-  next();
 });
 
 /* eslint-disable no-new */
