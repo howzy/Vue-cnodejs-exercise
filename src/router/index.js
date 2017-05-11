@@ -7,6 +7,7 @@ const home = r => require.ensure([], () => r(require('../pages/home')), 'home')
 const list = r => require.ensure([], () => r(require('../pages/list')), 'list')
 const login = r => require.ensure([], () => r(require('../pages/login')), 'login')
 const add = r => require.ensure([], () => r(require('../pages/new')), 'add')
+const topic = r => require.ensure([], () => r(require('../pages/topic')), 'topic')
 
 export default new Router({
   mode: 'history',
@@ -31,6 +32,11 @@ export default new Router({
       name: 'add',
       component: add,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/topic/:id',
+      name: 'topic',
+      component: topic
     }
   ]
 })

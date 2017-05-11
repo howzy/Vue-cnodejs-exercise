@@ -5,7 +5,7 @@
       <!--首页列表-->
       <ul class="posts-list">
         <li v-for="item in topics" :key="item.id">
-          <router-link to="">
+          <router-link :to="'/topic/'+item.id">
             <h3 :class="getTabInfo(item.tab, item.good, item.top, true)" :title="getTabInfo(item.tab, item.good, item.top, false)">{{item.title}}</h3>
             <div class="content">
               <img :src="item.author.avatar_url" class="avatar">
