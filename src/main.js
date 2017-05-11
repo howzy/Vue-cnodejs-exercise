@@ -11,6 +11,11 @@ Vue.use(Alert)
 
 Vue.config.productionTip = false
 
+if (sessionStorage.user) {
+  store.dispatch('setUserInfo', JSON.stringify(sessionStorage.user));
+}
+
+// 登录验证，页面需要登录而没有登录的情况下直接跳转到登录页面
 router.beforeEach((to, from, next) => {
   // 恢复页面的滚动效果
   $('html, body, #page').removeClass('scroll-hide');
