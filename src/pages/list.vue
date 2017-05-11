@@ -59,7 +59,7 @@
 
       // 如果从详情返回并且之前存有对应的查询条件和参数
       // 则直接渲染之前的数据
-      if (sessionStorage.searchKey && sessionStorage.searchKey.tab === this.searchKey.tab) {
+      if (sessionStorage.searchKey && sessionStorage.tab === this.searchKey.tab) {
         this.topics = JSON.parse(sessionStorage.topics);
         this.searchKey = JSON.parse(sessionStorage.searchKey);
         this.$nextTick(() => $(window).scrollTop(sessionStorage.scrollTop));
