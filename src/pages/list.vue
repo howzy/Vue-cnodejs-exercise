@@ -7,6 +7,22 @@
         <li v-for="item in topics" :key="item.id">
           <router-link to="">
             <h3 :class="getTabInfo(item.tab, item.good, item.top, true)" :title="getTabInfo(item.tab, item.good, item.top, false)">{{item.title}}</h3>
+            <div class="content">
+              <img :src="item.author.avatar_url" class="avatar">
+              <div class="info">
+                <p>
+                  <span class="name">{{item.author.loginname}}</span>
+                  <span class="status" v-if="item.reply_count > 0">
+                    <b>{{item.reply_count}}</b>
+                    /{{item.visit_count}}
+                  </span>
+                </p>
+                <p>
+                  <time>{{item.create_at | getLastTimeStr(true)}}</time>
+                  <time>{{item.last_reply_at | getLastTimeStr(true)}}</time>
+                </p>
+              </div>
+            </div>
           </router-link>
         </li>
       </ul>
@@ -20,6 +36,11 @@
   import nvHead from '../components/header'
 
   export default {
+    filters: {
+      getLastTimeStr(time, isFromNow) {
+        return utils.getLastTimeStr(time, isFromNow);
+      }
+    },
     data() {
       return {
         topics: [],
@@ -115,6 +136,7 @@
         this.searchKey.page = 1;
         this.getTopics();
         this.$refs.head.show = false;
+        $('html, body, #page').removeClass('scroll-hide');
       }
     },
     components: {
@@ -139,10 +161,24 @@
       border-bottom: 1px solid #d5dbdb;
     }
     h3 {
+      color: #2c3e50;
+      font-size: 16px;
+      line-height: 1.5;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
       &:before {
         content: attr(title);
         margin-right: 10px;
         margin-top: -3px;
+        padding: 5px 6px;
+        font-size: 10px;
+        font-weight: 400;
+        border-radius: 4px;
+        background-color: #e7e7e7;
+        text-align: center;
+        vertical-align: middle;
         color: #fff;
       }
       &.top:before {
@@ -166,12 +202,35 @@
       display: flex;
     }
     .avatar {
-
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 1px solid #F3F3F3;
     }
     .info {
       display: block;
       width: 100%;
       flex: 1;
+    }
+    p {
+        padding: 3px 0;
+        display: flex;
+        color: #34495e;
+        font-size: 12px;
+
+        &:first-child {
+            font-size: 14px;
+        }
+        .name, time:first-child {
+           display: block;
+           width: 100%;
+           flex: 1;
+        }
+        b {
+            color: #42b983;
+        }
     }
   }
 </style>
