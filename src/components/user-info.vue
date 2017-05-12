@@ -6,7 +6,7 @@
     </ul>
     <!--已登录-->
     <div class="login-yes" v-if="userInfo.loginname" @click="goUser">
-      <div class="avater"><img v-if="userInfo.avatar_url" :src="userInfo.avatar_url"></div>
+      <div class="avatar"><img v-if="userInfo.avatar_url" :src="userInfo.avatar_url"></div>
       <div class="info">
         <p v-if="userInfo.loginname" v-text="userInfo.loginname"></p>
       </div>
