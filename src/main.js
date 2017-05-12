@@ -12,7 +12,7 @@ Vue.use(Alert)
 Vue.config.productionTip = false
 
 if (sessionStorage.user) {
-  store.dispatch('setUserInfo', JSON.stringify(sessionStorage.user));
+  store.dispatch('setUserInfo', JSON.parse(sessionStorage.user));
 }
 
 // 登录验证，页面需要登录而没有登录的情况下直接跳转到登录页面

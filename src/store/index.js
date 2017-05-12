@@ -7,8 +7,7 @@ import actions from './actions'
 Vue.use(Vuex)
 
 const state = {
-  userInfo: {},
-  test: 'hahah'
+  userInfo: {}
 }
 
 export default new Vuex.Store({
