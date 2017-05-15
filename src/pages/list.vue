@@ -3,7 +3,7 @@
     <nv-head ref="head" :page-type="getTitleStr(searchKey.tab)" :fix-head="true"></nv-head>
     <section id="page">
       <!--首页列表-->
-      <ul class="posts-list">
+      <ul v-load-more="loaderMore" class="posts-list">
         <li v-for="item in topics" :key="item.id">
           <router-link :to="'/topic/'+item.id">
             <h3 :class="getTabInfo(item.tab, item.good, item.top, true)" :title="getTabInfo(item.tab, item.good, item.top, false)">{{item.title}}</h3>
@@ -33,6 +33,7 @@
 <script>
   import $ from 'webpack-zepto'
   import utils from '../libs/utils'
+  import { loadMore } from '../libs/mixin'
   import nvHead from '../components/header'
 
   export default {
@@ -41,8 +42,10 @@
         return utils.getLastTimeStr(time, isFromNow);
       }
     },
+    mixins: [loadMore],
     data() {
       return {
+        scroll: true,
         topics: [],
         searchKey: {
           page: 1,
@@ -66,8 +69,6 @@
       } else {
         this.getTopics();
       }
-
-      // 滚动加载
     },
     beforeRouteLeave(to, from, next) {
       // 如果跳转到详情页面，则记录关键数据
@@ -99,6 +100,7 @@
       getTopics() {
         let params = $.param(this.searchKey);
         $.get('https://cnodejs.org/api/v1/topics?' + params, res => {
+          this.scroll = true;
           if (res && res.data) {
             res.data.forEach(this.mergeTopics);
           }
@@ -123,6 +125,13 @@
       },
       getTabInfo(tab, good, top, isClass) {
         return utils.getTabInfo(tab, good, top, isClass);
+      },
+      loaderMore() {
+        if (this.scroll) {
+          this.scroll = false;
+          this.searchKey.page += 1;
+          this.getTopics();
+        }
       }
     },
     watch: {
