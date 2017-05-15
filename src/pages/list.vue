@@ -27,6 +27,7 @@
         </li>
       </ul>
     </section>
+    <nv-top></nv-top>
   </div>
 </template>
 
@@ -35,6 +36,7 @@
   import utils from '../libs/utils'
   import { loadMore } from '../libs/mixin'
   import nvHead from '../components/header'
+  import nvTop from '../components/backtotop'
 
   export default {
     filters: {
@@ -148,7 +150,8 @@
       }
     },
     components: {
-      nvHead
+      nvHead,
+      nvTop
     }
   }
 
