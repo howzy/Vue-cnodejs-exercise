@@ -8,7 +8,7 @@
         <div class="col">
           <span>{{topic.author.loginname}}</span>
           <time>
-            发布于:{{topic.create_at | getLastTimeStr}}
+            发布于:{{topic.create_at | getLastTimeStr(true)}}
           </time>
         </div>
         <div class="right">
@@ -18,6 +18,7 @@
         </div>
       </section>
       <section class="markdown-body topic-content" v-html="topic.content"></section>
+      <nv-top></nv-top>
     </div>
   </div>
 </template>
@@ -26,6 +27,7 @@
   import $ from 'webpack-zepto'
   import nvHead from '../components/header'
   import utils from '../libs/utils'
+  import nvTop from '../components/backtotop.vue'
 
   export default {
     filters: {
@@ -59,7 +61,8 @@
       }
     },
     components: {
-      nvHead
+      nvHead,
+      nvTop
     }
   }
 
@@ -134,5 +137,11 @@
         background: #1ABC9C;
       }
     }
+  }
+  .topic-content {
+    padding: 15px;
+    margin-top: 15px;
+    background: #fff;
+    border-bottom: 1px solid #d4d4d4;
   }
 </style>
