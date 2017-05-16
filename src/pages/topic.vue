@@ -12,12 +12,39 @@
           </time>
         </div>
         <div class="right">
-          <span class="tag" :class="getTabInfo(topic.tab, topic.good, topic.top, true)"
-                  v-text="getTabInfo(topic.tab, topic.good, topic.top, false)"></span>
+          <span class="tag" :class="getTabInfo(topic.tab, topic.good, topic.top, true)" v-text="getTabInfo(topic.tab, topic.good, topic.top, false)"></span>
           <span class="name">{{topic.visit_count}}次浏览</span>
         </div>
       </section>
       <section class="markdown-body topic-content" v-html="topic.content"></section>
+      <h3 class="topic-reply">
+        <strong>{{topic.reply_count}}</strong> 回复
+      </h3>
+
+      <section class="reply-list">
+        <ul>
+          <li v-for="item in topic.replies">
+            <section class="user">
+              <router-link to="">
+                <img :src="item.author.avatar_url" class="head">
+              </router-link>
+              <div class="info">
+                <span class="cl">
+                  <span class="name" v-text="item.author.loginname"></span>
+                <span class="name mt10">
+                    发布于:{{item.create_at | getLastTimeStr(true)}}
+                  </span>
+                </span>
+                <span class="cr">
+                  <span class="iconfont icon" :class="{'uped':isUps(item.ups)}" @click="upReply(item)">&#xe608;</span> {{item.ups.length}}
+                <span class="iconfont icon" @click="addReply(item.id)">&#xe609;</span>
+                </span>
+              </div>
+            </section>
+            <div class="reply_content" v-html="item.content"></div>
+          </li>
+        </ul>
+      </section>
       <nv-top></nv-top>
     </div>
   </div>
@@ -28,6 +55,7 @@
   import nvHead from '../components/header'
   import utils from '../libs/utils'
   import nvTop from '../components/backtotop.vue'
+  import { mapGetters } from 'vuex'
 
   export default {
     filters: {
@@ -40,8 +68,14 @@
         showMenu: false, // 是否展示左侧菜单栏
         topic: {}, // 主题
         topicId: '',
-        noData: false
+        noData: false,
+        curReplyId: ''
       }
+    },
+    computed: {
+      ...mapGetters({
+        userInfo: 'getUserInfo'
+      })
     },
     mounted() {
       // 从路由中获取主题id
@@ -58,6 +92,54 @@
     methods: {
       getTabInfo(tab, good = false, top, isClass) {
         return utils.getTabInfo(tab, good = false, top, isClass);
+      },
+      isUps(ups) {
+        return $.inArray(this.userInfo.userId, ups) >= 0;
+      },
+      addReply(id) {
+        this.curReplyId = id;
+        if (!this.userInfo.userId) {
+          this.$router.push({
+            name: 'login',
+            params: {
+              redirect: encodeURIComponent(this.$route.path)
+            }
+          });
+        }
+      },
+      upReply(item) {
+        if (!this.userInfo.userId) {
+          this.$route.push({
+            name: 'login',
+            params: {
+              redirect: encodeURIComponent(this.$route.path)
+            }
+          });
+        } else {
+          $.ajax({
+            type: 'POST',
+            url: 'https://cnodejs.org/api/v1/reply/' + item.id + '/ups',
+            data: {
+              accesstoken: this.userInfo.token
+            },
+            dataType: 'json',
+            success: res => {
+              if (res.success) {
+                if (res.action === 'down') {
+                  let index = $.inArray(this.userInfo.userId, item.ups);
+                  item.ups.splice(index, 1);
+                } else {
+                  item.ups.push(this.userInfo.userId);
+                }
+              }
+            },
+            error: res => {
+              let error = JSON.parse(res.responseText);
+              this.$alert(error.error_msg);
+              return false;
+            }
+          });
+        }
       }
     },
     components: {
@@ -69,6 +151,7 @@
 </script>
 
 <style lang="scss">
+  @import '../assets/scss/detail.scss';
   #page {
     padding-top: 44px;
     background-color: #fff;
@@ -88,7 +171,7 @@
 
   .author-info {
     display: flex;
-    align-item: center;
+    align-items: center;
     padding: 0 15px;
     color: #34495e;
     font-size: 12px;
@@ -138,6 +221,7 @@
       }
     }
   }
+
   .topic-content {
     padding: 15px;
     margin-top: 15px;
