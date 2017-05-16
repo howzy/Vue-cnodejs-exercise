@@ -15,4 +15,5 @@ export default {
 @import './assets/scss/common/reset.scss';
 @import './assets/scss/common/common.scss';
 @import './assets/scss/iconfont/iconfont.css';
+@import './assets/scss/github-markdown.css';
 </style>
