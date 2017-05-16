@@ -12,9 +12,8 @@
           </time>
         </div>
         <div class="right">
-          <span class="tag"
-                      :class="getTabInfo(topic.tab, topic.good, topic.top, true)"
-                      v-text="getTabInfo(topic.tab, topic.good, topic.top, true)"></span>
+          <span class="tag" :class="getTabInfo(topic.tab, topic.good, topic.top, true)"
+                  v-text="getTabInfo(topic.tab, topic.good, topic.top, false)"></span>
           <span class="name">{{topic.visit_count}}次浏览</span>
         </div>
       </section>
@@ -73,7 +72,7 @@
     transition: all .3s ease;
     overflow-x: hidden;
   }
-  
+
   .topic-title {
     margin: 15px;
     padding: 5px;
@@ -82,5 +81,58 @@
     line-height: 1.5;
     background-color: #f0f0f0;
     border-radius: 5px;
+  }
+
+  .author-info {
+    display: flex;
+    align-item: center;
+    padding: 0 15px;
+    color: #34495e;
+    font-size: 12px;
+    .col {
+      display: block;
+      width: 100%;
+      flex: 1;
+    }
+    .avatar {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+      border-radius: 50%;
+    }
+    .right {
+      text-align: right;
+    }
+    span,
+    time {
+      display: block;
+      padding: 5px 0;
+    }
+    .tag {
+      padding: 5px 6px;
+      font-size: 10px;
+      font-weight: 400;
+      border-radius: 4px;
+      background-color: #e7e7e7;
+      text-align: center;
+      vertical-align: middle;
+      color: #ffffff;
+      &.top {
+        background: #E74C3C;
+      }
+      &.ask {
+        background: #3498DB;
+      }
+      &.good {
+        background: #E67E22;
+      }
+      &.job {
+        background: #9B59B6;
+      }
+      &.share {
+        background: #1ABC9C;
+      }
+    }
   }
 </style>
