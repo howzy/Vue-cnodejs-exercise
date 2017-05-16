@@ -8,19 +8,32 @@
         <div class="col">
           <span>{{topic.author.loginname}}</span>
           <time>
-            发布于:{{topic.create_at}}
+            发布于:{{topic.create_at | getLastTimeStr}}
           </time>
         </div>
+        <div class="right">
+          <span class="tag"
+                      :class="getTabInfo(topic.tab, topic.good, topic.top, true)"
+                      v-text="getTabInfo(topic.tab, topic.good, topic.top, true)"></span>
+          <span class="name">{{topic.visit_count}}次浏览</span>
+        </div>
       </section>
+      <section class="markdown-body topic-content" v-html="topic.content"></section>
     </div>
   </div>
 </template>
 
 <script>
   import $ from 'webpack-zepto'
-  import nvHead from '../components/header';
+  import nvHead from '../components/header'
+  import utils from '../libs/utils'
 
   export default {
+    filters: {
+      getLastTimeStr(time, isFromNow) {
+        return utils.getLastTimeStr(time, isFromNow);
+      }
+    },
     data() {
       return {
         showMenu: false, // 是否展示左侧菜单栏
@@ -40,6 +53,11 @@
           this.noData = true;
         }
       })
+    },
+    methods: {
+      getTabInfo(tab, good = false, top, isClass) {
+        return utils.getTabInfo(tab, good = false, top, isClass);
+      }
     },
     components: {
       nvHead
