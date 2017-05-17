@@ -42,11 +42,16 @@
               </div>
             </section>
             <div class="reply_content" v-html="item.content"></div>
+            <nv-reply :topic.sync="topic"
+                                :topic-id="topicId"
+                                :reply-id="item.id"
+                                :reply-to="item.author.loginname"
+                                v-if="userInfo.userId && curReplyId === item.id"></nv-reply>
           </li>
         </ul>
       </section>
       <nv-top></nv-top>
-      <nv-reply></nv-reply>
+      <nv-reply v-if="userInfo.userId" :topic="topic" :topic-id="topicId"></nv-reply>
     </div>
   </div>
 </template>

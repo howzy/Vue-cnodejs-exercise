@@ -1,11 +1,83 @@
 <template>
   <section class="reply">
-    <textarea id="content" rows="8" class="text" placeholder="回复支持Markdown语法,请注意标记代码"></textarea>
-    <a class="button">确定</a>
+    <textarea id="content" rows="8" class="text"
+        :class="{'err':hasErr}"
+        v-model="content" placeholder="回复支持Markdown语法,请注意标记代码"></textarea>
+    <a class="button" @click="addReply">确定</a>
   </section>
 </template>
 
 <script>
+  import $ from 'webpack-zepto'
+  import utils from '../libs/utils'
+  const markdown = require('markdown').markdown
+  import { mapGetters } from 'vuex'
+
+  export default {
+    props: ['topic', 'preplyId', 'replyTo'],
+    data() {
+      return {
+        hasErr: false,
+        content: ''
+      }
+    },
+    computed: {
+      ...mapGetters({
+        userInfo: 'getUserInfo'
+      })
+    },
+    mounted() {
+      if (this.replyTo) {
+        this.content = `@${this.replyTo} `;
+      }
+    },
+    methods: {
+      addReply() {
+        if (!this.content) {
+          this.hasErr = true;
+        } else {
+          let time = new Date();
+          let linkUsers = utils.linkUsers(this.content);
+          let htmlText = markdown.toHTML(linkUsers) + this.author_txt;
+          let replyContent = $('<div class="markdown-text"></div>').append(htmlText)[0].outerHTML;
+          let postData = {
+            accesstoken: this.userInfo.token,
+            content: this.content + this.author_txt
+          };
+
+          if (this.replyId) {
+            postData.reply_id = this.replyId;
+          }
+          $.ajax({
+            type: 'POST',
+            url: `https://cnodejs.org/api/v1/topic/${this.topicId}/replies`,
+            data: postData,
+            dataType: 'json',
+            success: (res) => {
+              if (res.success) {
+                this.topic.replies.push({
+                  id: res.reply_id,
+                  author: {
+                    loginname: this.userInfo.loginname,
+                    avatar_url: this.userInfo.avatar_url
+                  },
+                  content: replyContent,
+                  ups: [],
+                  create_at: time
+                });
+              }
+              this.content = '';
+            },
+            error: (res) => {
+              var error = JSON.parse(res.responseText);
+              this.$alert(error.error_msg);
+              return false;
+            }
+          });
+        }
+      }
+    }
+  }
 
 </script>
 
@@ -20,6 +92,7 @@
     padding: 15px;
     color: #313131;
   }
+
   .reply .button {
     display: inline-block;
     width: 100%;
