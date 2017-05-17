@@ -50,12 +50,8 @@ $gap:5px;
         margin: 0 $gap*2;
     }
     .reply {
-        width: 100%;
-        margin-top: $gap*3;
-        border-top: solid 1px $colord4;
+        margin: 0 15px;
         .text {
-            margin: $gap*3 2%;
-            width: 96%;
             border-color: $colord4;
             color: #000;
         }

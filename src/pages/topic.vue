@@ -46,6 +46,7 @@
         </ul>
       </section>
       <nv-top></nv-top>
+      <nv-reply></nv-reply>
     </div>
   </div>
 </template>
@@ -55,6 +56,7 @@
   import nvHead from '../components/header'
   import utils from '../libs/utils'
   import nvTop from '../components/backtotop.vue'
+  import nvReply from '../components/reply'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -144,7 +146,8 @@
     },
     components: {
       nvHead,
-      nvTop
+      nvTop,
+      nvReply
     }
   }
 
